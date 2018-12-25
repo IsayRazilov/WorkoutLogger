@@ -34,6 +34,10 @@ app.get("/home",function(req,res){
     res.render("home");
 });
 
-app.listen(3000,function(){
-    console.log("Server started at port 3000");
+// app.listen(3000,function(){
+//     console.log("Server started at port 3000");
+// });
+
+app.listen(process.env.PORT, process.env.IP, function(){
+   console.log("The YelpCamp Server Has Started!");
 });
