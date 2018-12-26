@@ -1,9 +1,10 @@
-var express      = require("express"),
-    mongoose     = require("mongoose"),
-    bodyParser   = require("body-parser");
-    passport     = require("passport");
-    localStrategy = require("passport-local");
-    User          =    require("./models/user");
+var express        = require("express"),
+    mongoose       = require("mongoose"),
+    bodyParser     = require("body-parser"),
+    passport       = require("passport"),
+    localStrategy  = require("passport-local"),
+    User           = require("./models/user"),
+    Workout        = require("./models/workout");
 
 var app = express() ; 
 
@@ -14,7 +15,7 @@ app.use(express.static(__dirname + "/public"))
 
 // Passport config 
 app.use(require("express-session")({
-    secret: "Isay is the shit", 
+    secret: "Isay", 
     resave: false,
     saveUninitialized: false 
 }));
@@ -25,17 +26,9 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-var workoutSchema = new mongoose.Schema({
-    name: String, 
-    description: String
-});
-
-var Workout = mongoose.model("Workout", workoutSchema);
-
 var run = new Workout({
-    name: "Morning run",
-    description : "First run for the week"
+    name: "Pullups",
+    description : "Body wieght pull ups"
 });
 
 // run.save(function(err,workout){
@@ -47,10 +40,13 @@ var run = new Workout({
 //     }
 // })
 
-app.get("/home",function(req,res){
+app.get("/",function(req,res){
     res.render("home");
 });
 
+app.get("/new",function(req,res){
+    res.render("newworkout");
+});
 
 // AUTH Routes 
 
@@ -71,10 +67,10 @@ app.post("/register", function(req,res){
     });
 });
 
-app.listen(3000,function(){
-    console.log("Server started at port 3000");
-});
-
-// app.listen(process.env.PORT, process.env.IP, function(){
-//    console.log("The YelpCamp Server Has Started!");
+// app.listen(3000,function(){
+//     console.log("Server started at port 3000");
 // });
+
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("The YelpCamp Server Has Started!");
+});
