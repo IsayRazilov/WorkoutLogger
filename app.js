@@ -56,9 +56,9 @@ app.get("/new",isLoggedIn,function(req,res){
 
 // AUTH Routes 
 
-// app.listen(3000,function(){
-//     console.log("Server started at port 3000");
-// });
+app.listen(3000,function(){
+    console.log("Server started at port 3000");
+});
 
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
@@ -67,6 +67,6 @@ function isLoggedIn(req,res,next){
     res.redirect("login")
 }
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("The YelpCamp Server Has Started!");
-});
+// app.listen(process.env.PORT, process.env.IP, function(){
+//     console.log("The YelpCamp Server Has Started!");
+// });

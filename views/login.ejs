@@ -2,17 +2,28 @@
 <% include partials/header %>
 
 <link rel="stylesheet" href="/stylesheets/login_register.css">
-<div class="row">
-    <div class="content"> 
-        <h1>Login!</h1>
-        <hr> 
-        <form action="/login" method="POST">
-            <input type="text" name="username" placeholder="username">
-            <input type="password" name="password" placeholder="password">
-            <input type="submit" value="Login!">
-        </form>
-    </div>
-</div>
 
+<div class="card bg-light account-wall">
+        <article class="card-body mx-auto" style="max-width: 600px;">
+            <h4 class="card-title mt-3 text-center">Sign In To Your Account</h4>
+            <form>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                 </div>
+                <input name="" class="form-control" placeholder="Username" type="text">
+            </div> 
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input class="form-control" placeholder="Password" type="password">
+            </div>                                    
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Sign In  </button>
+            </div>      
+        </form>
+    </article>
+</div> 
 
 <% include partials/footer %>
