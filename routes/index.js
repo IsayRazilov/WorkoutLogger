@@ -23,7 +23,7 @@ router.post("/register", function(req,res){
                 return res.render("/register")
             }
             passport.authenticate("local")(req,res,function(){
-                res.redirect("/new")
+                res.redirect("/workouts")
             })
         });
     }
@@ -35,7 +35,7 @@ router.get("/login",function(req,res){
 
 router.post("/login",passport.authenticate("local",
     {
-        successRedirect: "/new",
+        successRedirect: "/workouts",
         failureRedirect: "/login"
 
     }),function(req,res){

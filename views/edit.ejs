@@ -1,0 +1,36 @@
+<% include partials/header %>
+
+<link rel="stylesheet" href="/stylesheets/workout.css">
+
+<div class="container">
+        <div class="card text-center mx-5 my-5">
+                <div class="card-header">
+                  <h4>Edit workout</h4> 
+                </div>
+                <div class="card-body mx-5 my-3">
+                        <form action="/workouts/<%=workout._id%>?_method=PUT" method="post" class="my-3">
+                                <select name="workout[type]" class="form-control my-3">
+                                    <option selected="selected"> <%= workout.type %> </option>
+                                    <option> Select Workout Type</option>
+                                    <option>Deadlift</option>
+                                    <option>Benchpress</option>
+                                    <option>Squat</option>
+                                </select>
+                                <div class="form-row">
+                                  <div class="col">
+                                    <input name="workout[time]" type="text" class="form-control" value=<%= workout.time %>>
+                                  </div>
+                                  <div class="col">
+                                    <input name="workout[weight]" type="text" class="form-control" value=<%= workout.weight %>>
+                                  </div>
+                                </div>
+                                <div class="form-group my-3">
+                                    <input name="workout[repetions]" type="text" class="form-control" value=<%= workout.repetions %>>
+                                </div>
+                                <button class="btn btn-primary my-3 px-5 btn-lg"> Sumbit </button>
+                        </form>
+                </div>
+              </div>
+    </div>
+
+<% include partials/footer %>

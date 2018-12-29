@@ -4,7 +4,8 @@ var express        = require("express"),
     passport       = require("passport"),
     localStrategy  = require("passport-local"),
     User           = require("./models/user"),
-    Workout        = require("./models/workout");
+    Workout        = require("./models/workout"),
+    methodOverride = require("method-override")
 
 var app = express() ; 
 var authRoutes = require("./routes/index");
@@ -18,6 +19,7 @@ app.use(function(req,res,next){
     res.locals.currentUser = req.user ; 
     next(); 
 })
+app.use(methodOverride("_method"));
 
 // Passport config 
 app.use(require("express-session")({
@@ -34,8 +36,12 @@ passport.deserializeUser(User.deserializeUser());
 app.use(authRoutes);
 
 var run = new Workout({
-    name: "Pullups",
-    description : "Body wieght pull ups"
+    userid: "STAM",
+    type: "pullups",
+    image: "",
+    time: "7:00",
+    weight: "70",
+    repetions: "10"
 });
 
 
@@ -48,13 +54,76 @@ var run = new Workout({
 //     }
 // })
 
+// workout routes *********************************************
 
-app.get("/new",isLoggedIn,function(req,res){
-    req.user
-    res.render("newworkout",{ currentUser: req.user });
+app.get("/workouts",isLoggedIn,function(req,res){
+    Workout.find({},function(err,workouts){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("workouts",{ currentUser: req.user,workouts: workouts });
+        }
+    });
 });
 
-// AUTH Routes 
+app.get("/workouts/new",isLoggedIn,function(req,res){
+    res.render("new",{currentUser: req.user});
+});
+
+app.post("/workouts",isLoggedIn,function(req,res){
+    var date = new Date(); 
+    req.body.workout.date = date.toDateString() ;
+    Workout.create(req.body.workout,function(err,newWorkout){
+        if(err){
+            console.log(err)
+        } else {
+            res.redirect("/workouts")
+        }
+    })
+});
+
+app.get("/workouts/:id",isLoggedIn,function(req,res){
+    Workout.findById(req.params.id, function(err,foundWorkout){
+        if(err){
+            res.redirect("/workouts")
+        } else {
+            res.render("show", {currentUser: req.user,workout: foundWorkout})
+        }
+    })
+});
+
+app.get("/workouts/:id/edit",isLoggedIn,function(req,res){
+    Workout.findById(req.params.id,function(err,foundWorkout){
+        if(err){
+            res.redirect("/workouts")
+        } else {
+            res.render("edit",{currentUser: req.user,workout: foundWorkout })
+        }
+    })
+});
+
+app.put("/workouts/:id",isLoggedIn,function(req,res){
+    Workout.findOneAndUpdate(req.params.id,req.body.workout,function(err,updatedWorkout){
+        if(err){
+            res.redirect("/workouts")
+        } else {
+            res.redirect("/workouts/" + req.params.id)
+        }
+    })
+})
+
+app.delete("/workouts/:id", function(req,res){
+    Workout.findByIdAndRemove(req.params.id,function(err){
+        if(err){
+            res.redirect("/workouts")
+        } else {
+            res.redirect("/workouts")
+        }
+    });
+})
+
+//*************************************************************
+
 
 app.listen(3000,function(){
     console.log("Server started at port 3000");

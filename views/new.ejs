@@ -1,0 +1,36 @@
+<% include partials/header %>
+<link rel="stylesheet" href="/stylesheets/workout.css">
+<div class="container">
+        <div class="card text-center mx-5 my-5">
+                <div class="card-header">
+                  <h4>Add new workout</h4> 
+                </div>
+                <div class="card-body">
+                        <form action="/workouts" method="post">
+                                <select name="workout[type]"class="form-control my-3">
+                                    <option > Select Workout Type</option>
+                                    <option>Deadlift</option>
+                                    <option>Benchpress</option>
+                                    <option>Squat</option>
+                                </select>
+                                <div class="form-row">
+                                  <div class="col">
+                                    <input name="workout[time]" type="text" class="form-control" placeholder="Time(minutes)">
+                                  </div>
+                                  <div class="col">
+                                    <input name="workout[weight]" type="text" class="form-control" placeholder="Weight(kg)">
+                                  </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <input name="workout[repetions]" type="text" class="form-control" placeholder="Repetions">
+                                </div>
+                                <button class="btn btn-primary btn-lg"> Sumbit </button>
+                        </form>
+                </div>
+                <div class="card-footer text-muted">
+                  Last added x days ago
+                </div>
+              </div>
+    </div>
+
+<% include partials/footer %>
