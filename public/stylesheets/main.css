@@ -1,9 +1,6 @@
 body {
-    background: url("../images/img5.jpg");
+    background: url("../images/img5.jpg") no-repeat center center fixed;;
     background-size: cover;
-    background-position: center center fixed;
-    background-repeat: no-repeat;  
-    transition: background 1.5s linear;
 }
 
 h1 {

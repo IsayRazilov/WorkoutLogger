@@ -1,9 +1,6 @@
 body {
-    background: url("../images/login.jpg");
+    background: url("../images/login.jpg") no-repeat center center fixed;
     background-size: cover;
-    background-position: center center fixed;
-    background-repeat: no-repeat;  
-    transition: background 1.5s linear;
 } */
 
 
@@ -14,7 +11,7 @@ body, html {
 
 .card 
 {
-    margin-top: 100px;
+    margin-top: 150px;
 
 }
 .account-wall
