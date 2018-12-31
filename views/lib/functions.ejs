@@ -1,0 +1,17 @@
+<%
+GetImageByWorkoutType = function(workoutType) {
+    img_name = "";
+    switch(workoutType) {
+        case "Deadlift":
+            img_name = "Deadlift.jpg" 
+            break
+        case "Benchpress":
+            img_name = "Benchpress.jpeg" 
+            break
+        case "Squat":
+            img_name = "Squat.png" 
+            break
+    }
+    return img_name;
+}
+%>

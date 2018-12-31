@@ -1,11 +1,18 @@
 <% include partials/header %>
-<link rel="stylesheet" href="/stylesheets/login_register.css">
-<div class="form-row justify-content-center py-3">
+<% include lib/functions %>
+
+<% var count = 0 %> 
+
+<link rel="stylesheet" href="/stylesheets/workout.css">
+<div class="form-row justify-content-center pt-5">
     <a class="btn btn-success btn-lg" href="/workouts/new" >Add New Workout</a>
 </div>
-<div class="form-row">
+
 <% workouts.forEach(function(workout){ %> 
-  <div class="col">
+  <% if ( count == 0 ) { %>
+    <div class="form-row">
+  <% } %> 
+  <div class="col-4">
       <div class="card text-center">
               <div class="card-header">
                   <h4> <%= workout.type %> </h4> 
@@ -18,14 +25,18 @@
                   </ul>
                   <a class="btn btn-primary my-2 btn-lg" href="/workouts/<%= workout._id %>">Show</a>
               </div>
-              <!-- <img class="card-img-top" src="login.jpg" alt="Card image cap"> -->
+              <img class="card-img-top img-thumbnail" src="../images/<%= GetImageByWorkoutType(workout.type) %>" alt="Card image cap"> 
               <div class="card-footer text-muted">
                   <%= workout.date %> 
               </div>
       </div>
   </div>
+  <% count += 1 %>
+  <% if ( count == 3 ) { %>
+    <% count = 0 %> 
+    </div>
+  <% } %>
 <% }) %> 
 
-</div>
 
 <% include partials/footer %>
