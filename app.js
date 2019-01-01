@@ -9,6 +9,7 @@ var express        = require("express"),
 
 var app = express() ; 
 var authRoutes = require("./routes/index");
+var workoutRoutes = require("./routes/workouts");
 
 mongoose.connect("mongodb://aciles1221:qwerty1221@ds143474.mlab.com:43474/workouts_logger");
 app.use(bodyParser.urlencoded({extended: true}))
@@ -34,15 +35,16 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(authRoutes);
+app.use(workoutRoutes);
 
-var run = new Workout({
-    userid: "STAM",
-    type: "pullups",
-    image: "",
-    time: "7:00",
-    weight: "70",
-    repetions: "10"
-});
+// var run = new Workout({
+//     userid: "STAM",
+//     type: "pullups",
+//     image: "",
+//     time: "7:00",
+//     weight: "70",
+//     repetions: "10"
+// });
 
 
 // run.save(function(err,workout){
@@ -54,92 +56,9 @@ var run = new Workout({
 //     }
 // })
 
-// workout routes *********************************************
-
-app.get("/workouts",isLoggedIn,function(req,res){
-    User.findById(req.user._id).populate("workouts").exec(function(err,foundUser){
-        if(err) {
-            console.log(err) ;
-        } else {
-            res.render("workouts",{ currentUser: req.user,workouts: foundUser.workouts });
-        }
-    });
-});
-
-app.get("/workouts/new",isLoggedIn,function(req,res){
-    res.render("new",{currentUser: req.user});
-});
-
-app.post("/workouts",isLoggedIn,function(req,res){
-    var date = new Date(); 
-    req.body.workout.date = date.toDateString() ;
-    Workout.create(req.body.workout,function(err,newWorkout){
-        if(err){
-            console.log(err)
-        } else {
-            User.findById(req.user._id,function(err,foundUser){
-                if(err){
-                    console.log(err)
-                } else {
-                    foundUser.workouts.push(newWorkout);
-                    foundUser.save(function(err,data){
-                        if(err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
-            res.redirect("/workouts")
-        }
-    })
-});
-
-app.get("/workouts/:id",isLoggedIn,function(req,res){
-    Workout.findById(req.params.id, function(err,foundWorkout){
-        if(err){
-            res.redirect("/workouts")
-        } else {
-            res.render("show", {currentUser: req.user,workout: foundWorkout})
-        }
-    })
-});
-
-app.get("/workouts/:id/edit",isLoggedIn,function(req,res){
-    Workout.findById(req.params.id,function(err,foundWorkout){
-        if(err){
-            res.redirect("/workouts")
-        } else {
-            res.render("edit",{currentUser: req.user,workout: foundWorkout })
-        }
-    })
-});
-
-app.put("/workouts/:id",isLoggedIn,function(req,res){
-    Workout.findOneAndUpdate(req.params.id,req.body.workout,function(err,updatedWorkout){
-        if(err){
-            res.redirect("/workouts")
-        } else {
-            res.redirect("/workouts/" + req.params.id)
-        }
-    })
-})
-
-app.delete("/workouts/:id", function(req,res){
-    Workout.findByIdAndRemove(req.params.id,function(err){
-        if(err){
-            res.redirect("/workouts")
-        } else {
-            res.redirect("/workouts")
-        }
-    });
-})
-
-//*************************************************************
-
-
-app.listen(3000,function(){
-    console.log("Server started at port 3000");
-});
+// app.listen(3000,function(){
+//     console.log("Server started at port 3000");
+// });
 
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
@@ -148,6 +67,6 @@ function isLoggedIn(req,res,next){
     res.redirect("login")
 }
 
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("The YelpCamp Server Has Started!");
-// });
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("The YelpCamp Server Has Started!");
+});
