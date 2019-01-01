@@ -57,11 +57,11 @@ var run = new Workout({
 // workout routes *********************************************
 
 app.get("/workouts",isLoggedIn,function(req,res){
-    Workout.find({},function(err,workouts){
-        if(err){
-            console.log(err);
+    User.findById(req.user._id).populate("workouts").exec(function(err,foundUser){
+        if(err) {
+            console.log(err) ;
         } else {
-            res.render("workouts",{ currentUser: req.user,workouts: workouts });
+            res.render("workouts",{ currentUser: req.user,workouts: foundUser.workouts });
         }
     });
 });
@@ -77,6 +77,18 @@ app.post("/workouts",isLoggedIn,function(req,res){
         if(err){
             console.log(err)
         } else {
+            User.findById(req.user._id,function(err,foundUser){
+                if(err){
+                    console.log(err)
+                } else {
+                    foundUser.workouts.push(newWorkout);
+                    foundUser.save(function(err,data){
+                        if(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
             res.redirect("/workouts")
         }
     })
@@ -125,9 +137,9 @@ app.delete("/workouts/:id", function(req,res){
 //*************************************************************
 
 
-// app.listen(3000,function(){
-//     console.log("Server started at port 3000");
-// });
+app.listen(3000,function(){
+    console.log("Server started at port 3000");
+});
 
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
@@ -136,6 +148,6 @@ function isLoggedIn(req,res,next){
     res.redirect("login")
 }
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("The YelpCamp Server Has Started!");
-});
+// app.listen(process.env.PORT, process.env.IP, function(){
+//     console.log("The YelpCamp Server Has Started!");
+// });

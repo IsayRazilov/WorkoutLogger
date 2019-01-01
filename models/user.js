@@ -5,7 +5,11 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var UserSchema = new mongoose.Schema({
     username: String, 
     mail: String,
-    password: String
+    password: String,
+    workouts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Workout"
+    }]
 });
 
 UserSchema.plugin(passportLocalMongoose);
