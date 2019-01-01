@@ -1,17 +1,17 @@
 <%
-GetImageByWorkoutType = function(workoutType) {
-    img_name = "";
+GetColorByWorkout = function(workoutType) {
+    color = "";
     switch(workoutType) {
         case "Deadlift":
-            img_name = "Deadlift.jpg" 
+            color = "rgba(160, 28, 28);" 
             break
         case "Benchpress":
-            img_name = "Benchpress.jpeg" 
+            color = "rgba(3, 122, 3);" 
             break
         case "Squat":
-            img_name = "Squat.png" 
+            color = "rgba(17, 17, 161);" 
             break
     }
-    return img_name;
+    return color;
 }
 %>

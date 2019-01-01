@@ -13,19 +13,18 @@
     <div class="form-row">
   <% } %> 
   <div class="col-4">
-      <div class="card text-center">
-              <div class="card-header">
+      <div class="card text-center" >
+              <div class="card-header"  style="-webkit-text-fill-color:<%= GetColorByWorkout(workout.type) %>">
                   <h4> <%= workout.type %> </h4> 
               </div>
               <div class="card-body py-0">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Time: <%= workout.time %> </li>
-                    <li class="list-group-item">Weight: <%= workout.weight %> </li>
+                    <li class="list-group-item">Time: <%= workout.time %> min</li>
+                    <li class="list-group-item">Weight: <%= workout.weight %> kg</li>
                     <li class="list-group-item">Repetions: <%= workout.repetions %> </li>
                   </ul>
-                  <a class="btn btn-primary my-2 btn-lg" href="/workouts/<%= workout._id %>">Show</a>
+                  <a class="btn btn-primary my-2 btn-xs-lg" href="/workouts/<%= workout._id %>">Show</a>
               </div>
-              <img class="card-img-top img-thumbnail" src="../images/<%= GetImageByWorkoutType(workout.type) %>" alt="Card image cap"> 
               <div class="card-footer text-muted">
                   <%= workout.date %> 
               </div>
